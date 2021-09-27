@@ -13,29 +13,31 @@ public class WindowHandle_Demo extends DriverSetup {
 	public void MultipleWomdows() throws InterruptedException {
 
 		// Launching the site
-		driver.get("https://demoqa.com/browser-windows");
-
-	    // Opening all the child window
-	    driver.findElement(By.id("windowButton")).click();
-	    driver.findElement(By.id("messageWindowButton")).click();
+		driver.get("https://www.salesforce.com/in/");
+		
+		
+		//Start Free trial
+		driver.findElement(By.xpath("//*[@id=\"main\"]/div[2]/div/div/div/div[2]/div[1]/div[1]/div[3]/div/div[1]/div/a")).click();
+		Thread.sleep(2000);
+		
+		//switch to new window
+		Set<String> windowhandles = driver.getWindowHandles();
+		Iterator <String> iterator = windowhandles.iterator();
+		String parentWindow = iterator.next();
+		String childWindow = iterator.next();
+		
+		driver.switchTo().window(childWindow);
+		
+		//driver.switchTo().window(parentWindow);
+		
+	    // Sign-up form
+		Thread.sleep(2000);
+	    driver.findElement(By.name("UserFirstName")).sendKeys("IMRAN");
+	    Thread.sleep(1000);
+	    driver.findElement(By.name("UserLastName")).sendKeys("AL MUNYEEM");
+	    Thread.sleep(1000);
 	    
-	    String MainWindow = driver.getWindowHandle();
-	    System.out.println("Main window handle is " + MainWindow);
-
-	    // To handle all new opened window
-	    Set<String> s1 = driver.getWindowHandles();
-	    System.out.println("Child window handle is" + s1);
-	    Iterator<String> i1 = s1.iterator();
-
-	    // Here we will check if child window has other child windows and when child window
-	    //is the main window it will come out of loop.
-	      while (i1.hasNext()) {
-	          String ChildWindow = i1.next();
-	          if (!MainWindow.equalsIgnoreCase(ChildWindow)) {
-	              driver.switchTo().window(ChildWindow);
-	              driver.close();
-	              System.out.println("Child window closed");
-	           }
-	       }
-	    }
+	    
+	     
+	}
 	}
